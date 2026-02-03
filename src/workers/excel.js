@@ -16,8 +16,12 @@ async function startWorker() {
   const connection = await amqp.connect("amqp://localhost:5672");
   const channel = await connection.createChannel();
 
+  // console.log(channel , "channel worker+++++++++++++");
+  
+
   await channel.assertQueue(QUEUE, { durable: true });
   channel.prefetch(1);
+  // prefetch means worker process each row at a time , no overload.
 
   console.log("Worker started and waiting for jobs...");
 
